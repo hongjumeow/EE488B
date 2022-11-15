@@ -3,6 +3,6 @@
 
 import torchvision
 
-def MainModel(nOut=256, **kwargs):
+def Renet18(nOut=256, **kwargs):
     
     return torchvision.models.resnet18(num_classes=nOut)

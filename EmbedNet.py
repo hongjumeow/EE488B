@@ -16,7 +16,7 @@ class EmbedNet(nn.Module):
         super(EmbedNet, self).__init__();
 
         ## __S__ is the embedding model
-        EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
+        EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('Resnet18')
         self.__S__ = EmbedNetModel(**kwargs);
 
         ## __L__ is the classifier plus the loss function
