@@ -29,7 +29,7 @@ class LossFunction(nn.Module):
         out_positive    = F.normalize(x[:,1,:], p=2, dim=1)
 
         # Choose appropriate negative indices
-        negidx      = self.choose_negative(out_anchor.detach(),out_positive.detach(),type='any')
+        negidx      = self.choose_negative(out_anchor.detach(),out_positive.detach(),type='semihard')
 
         # Get negative pairs
         out_negative = out_positive[negidx,:]
