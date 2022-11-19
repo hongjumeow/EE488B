@@ -64,7 +64,26 @@ class LossFunction(nn.Module):
             if type == 'any':
                 # Random negative mining
                 negidx.append(random.choice(excidx))
+                
+            elif type == 'semihard':
+                distance = F.pairwise_distance(embed_a[idx, :], embed_p)
 
+                hardidx = torch.IntTensor(allidx)[(distance > distance[idx]) & (distance < distance[idx] + self.margin)]
+
+                if len(hardidx) == 0:
+                    negidx.append(random.choice(excidx))
+                else:
+                    negidx.append(random.choice(hardidx))
+            
+            elif type == 'hard':
+                distance = F.pairwise_distance(embed_a[idx, :], embed_p)
+
+                hardidx = torch.IntTensor(allidx)[(distance < distance[idx])]
+
+                if len(hardidx) == 0:
+                    negidx.append(random.choice(excidx))
+                else:
+                    negidx.append(random.choice(hardidx))
             else:
                 ValueError('Undefined type of mining.')
 
