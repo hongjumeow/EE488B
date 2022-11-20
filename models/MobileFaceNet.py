@@ -100,9 +100,9 @@ class MobileFaceNet(nn.Module):
 
         out = self.conv_6_dw(out)
 
+        print(out.shape)
         out = self.conv_6_flatten(out)
 
         out = self.linear(out)
-        print(out.shape)
         out = self.bn(out)
         return l2_norm(out)
