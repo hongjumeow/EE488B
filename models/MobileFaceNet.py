@@ -61,9 +61,9 @@ class Residual(nn.Module):
     def forward(self, x):
         return self.model(x)
     
-class MainModel(nn.Module):
+class MobileFaceNet(nn.Module):
     def __init__(self, embedding_size=512):
-        super(MainModel, self).__init__()
+        super(MobileFaceNet, self).__init__()
         self.conv1 = Conv_block(3, 64, kernel=(3, 3), stride=(2, 2), padding=(1, 1))
         self.conv2_dw = Conv_block(64, 64, kernel=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
         self.conv_23 = Depth_Wise(64, 64, kernel=(3, 3), stride=(2, 2), padding=(1, 1), groups=128)
