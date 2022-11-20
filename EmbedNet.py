@@ -18,7 +18,7 @@ class EmbedNet(nn.Module):
         
         if model == "MobileFaceNet":
             EmbedNetModel = MobileFaceNet
-            self.__S__ = EmbedNetModel(embedding_size=kwargs.nOut);
+            self.__S__ = EmbedNetModel(embedding_size=512);
 
         else:
             ## __S__ is the embedding model
