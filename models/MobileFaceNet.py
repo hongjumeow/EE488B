@@ -62,7 +62,7 @@ class Residual(nn.Module):
         return self.model(x)
     
 class MobileFaceNet(nn.Module):
-    def __init__(self, embedding_size=512):
+    def __init__(self, embedding_size):
         super(MobileFaceNet, self).__init__()
         self.conv1 = Conv_block(3, 64, kernel=(3, 3), stride=(2, 2), padding=(1, 1))
         self.conv2_dw = Conv_block(64, 64, kernel=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
@@ -79,6 +79,7 @@ class MobileFaceNet(nn.Module):
         self.bn = nn.BatchNorm1d(embedding_size)
     
     def forward(self, x):
+        print(x.shape)
         out = self.conv1(x)
 
         out = self.conv2_dw(out)
@@ -102,6 +103,6 @@ class MobileFaceNet(nn.Module):
         out = self.conv_6_flatten(out)
 
         out = self.linear(out)
-
+        print(out.shape)
         out = self.bn(out)
         return l2_norm(out)
