@@ -9,7 +9,7 @@ import time, importlib
 from DatasetLoader import test_dataset_loader
 from torch.cuda.amp import autocast, GradScaler
 from tqdm import tqdm
-from models.MobileFaceNet import MobileFaceNet, IR_SE_50
+from models.MobileFaceNet import MobileFaceNet
 
 class EmbedNet(nn.Module):
 
@@ -19,10 +19,6 @@ class EmbedNet(nn.Module):
         if model == "MobileFaceNet":
             EmbedNetModel = MobileFaceNet
             self.__S__ = EmbedNetModel(embedding_size=512);
-
-        elif model == "IRSE":
-            EmbedNetModel = IR_SE_50
-            self.__S__ = EmbedNetModel(input_size=[224, 224]);
         else:
             ## __S__ is the embedding model
             EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
