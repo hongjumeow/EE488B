@@ -83,7 +83,7 @@ def main_worker(args):
         [transforms.ToTensor(),
          transforms.Resize(256),
          transforms.RandomCrop([224, 224]),
-         transforms.Resize(112),
+        #  transforms.Resize(112),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Input transformations for evaluation
@@ -91,7 +91,7 @@ def main_worker(args):
         [transforms.ToTensor(),
          transforms.Resize(256),
          transforms.CenterCrop([224, 224]),
-         transforms.Resize(112),
+        #  transforms.Resize(112),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Initialise trainer and data loader
