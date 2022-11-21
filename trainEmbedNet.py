@@ -63,7 +63,7 @@ parser.add_argument('--output',         type=str,   default="",     help='Save a
 ## Training
 parser.add_argument('--mixedprec',      dest='mixedprec',   action='store_true', help='Enable mixed precision training')
 parser.add_argument('--gpu',            type=int,   default=9,      help='GPU index');
-
+parser.add_argument('--input_size', type=int, default=224)
 args = parser.parse_args();
 
 
@@ -82,14 +82,14 @@ def main_worker(args):
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
          transforms.Resize(256),
-         transforms.RandomCrop([224,224]),
+         transforms.RandomCrop([args.input_size, args.input_size]),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Input transformations for evaluation
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
          transforms.Resize(256),
-         transforms.CenterCrop([224,224]),
+         transforms.CenterCrop([args.input_size, args.input_size]),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Initialise trainer and data loader
