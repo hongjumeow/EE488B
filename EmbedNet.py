@@ -9,8 +9,7 @@ import time, importlib
 from DatasetLoader import test_dataset_loader
 from torch.cuda.amp import autocast, GradScaler
 from tqdm import tqdm
-from models.MobileFaceNet import MobileFaceNet
-from models.IRSE import IR_SE_50
+from models.MobileFaceNet import MobileFaceNet, IR_SE_50
 
 class EmbedNet(nn.Module):
 
