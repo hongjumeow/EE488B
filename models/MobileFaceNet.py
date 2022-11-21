@@ -79,7 +79,6 @@ class MobileFaceNet(nn.Module):
         self.bn = nn.BatchNorm1d(embedding_size)
     
     def forward(self, x):
-        print(x.shape)
         out = self.conv1(x)
 
         out = self.conv2_dw(out)
@@ -100,7 +99,6 @@ class MobileFaceNet(nn.Module):
 
         out = self.conv_6_dw(out)
 
-        print(out.shape)
         out = self.conv_6_flatten(out)
 
         out = self.linear(out)
