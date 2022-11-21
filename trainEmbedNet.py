@@ -82,14 +82,16 @@ def main_worker(args):
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
          transforms.Resize(256),
-         transforms.RandomCrop([args.input_size, args.input_size]),
+         transforms.RandomCrop([224, 224]),
+         transforms.Resize(112),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Input transformations for evaluation
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
          transforms.Resize(256),
-         transforms.CenterCrop([args.input_size, args.input_size]),
+         transforms.CenterCrop([224, 224]),
+         transforms.Resize(112),
          transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
 
     ## Initialise trainer and data loader
