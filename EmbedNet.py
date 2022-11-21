@@ -21,7 +21,7 @@ class EmbedNet(nn.Module):
             self.__S__ = EmbedNetModel(embedding_size=512);
 
         if model == "IRSE":
-            EmbedNet = IR_SE_50
+            EmbedNetModel = IR_SE_50
             self.__S__ = EmbedNetModel(input_size=[224, 224]);
         else:
             ## __S__ is the embedding model
