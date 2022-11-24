@@ -9,20 +9,14 @@ import time, importlib
 from DatasetLoader import test_dataset_loader
 from torch.cuda.amp import autocast, GradScaler
 from tqdm import tqdm
-from models.MobileFaceNet import MobileFaceNet
 
 class EmbedNet(nn.Module):
 
     def __init__(self, model, optimizer, trainfunc, nPerClass, **kwargs):
         super(EmbedNet, self).__init__();
-        
-        if model == "MobileFaceNet":
-            EmbedNetModel = MobileFaceNet
-            self.__S__ = EmbedNetModel(embedding_size=512);
-        else:
-            ## __S__ is the embedding model
-            EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
-            self.__S__ = EmbedNetModel(**kwargs);
+        ## __S__ is the embedding model
+        EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
+        self.__S__ = EmbedNetModel(**kwargs);
 
         ## __L__ is the classifier plus the loss function
         LossFunction = importlib.import_module('loss.'+trainfunc).__getattribute__('LossFunction')
