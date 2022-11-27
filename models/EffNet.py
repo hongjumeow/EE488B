@@ -1,6 +1,8 @@
 
-import torch
+import torchvision
 
 def MainModel(nOut=256, **kwargs):
-    efficientnet = torch.hub.load('NVIDIA/DeepLearningExamples:torchhub', 'nvidia_efficientnet_b0', pretrained=True)
-    return efficientnet(num_classes=nOut)
+    efficientnet = torchvision.models.efficientnet_b0(num_classes=nOut)
+    return efficientnet
+
+MainModel()
