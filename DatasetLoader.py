@@ -9,8 +9,32 @@ import pdb
 import glob
 import os
 from torch.utils.data import Dataset, DataLoader
-from PIL import Image
+from PIL import Image, ImageFilter
+import torchvision.transforms as transforms
+import torchvision.datasets as datasets
 
+class TwoCropsTransform:
+    """Take two random crops of one image as the query and key."""
+
+    def __init__(self, base_transform):
+        self.base_transform = base_transform
+
+    def __call__(self, x):
+        q = self.base_transform(x)
+        k = self.base_transform(x)
+        return [q, k]
+    
+class GaussianBlur(object):
+    """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
+
+    def __init__(self, sigma=[.1, 2.]):
+        self.sigma = sigma
+
+    def __call__(self, x):
+        sigma = random.uniform(self.sigma[0], self.sigma[1])
+        x = x.filter(ImageFilter.GaussianBlur(radius=sigma))
+        return x
+    
 def round_down(num, divisor):
     return num - (num%divisor)
 
@@ -127,7 +151,36 @@ class meta_sampler(torch.utils.data.Sampler):
     def __len__(self):
         return self.num_iters
 
-def get_data_loader(batch_size, max_img_per_cls, nDataLoaderThread, nPerClass, train_path, train_ext, transform, **kwargs):
+def get_data_loader(batch_size, max_img_per_cls, nDataLoaderThread, nPerClass, train_path, train_ext, transform, trainfunc, **kwargs):
+    
+    if trainfunc == "simsiam":
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                        std=[0.229, 0.224, 0.225])
+        augmentation = [
+            transforms.RandomResizedCrop(224, scale=(0.2, 1.)),
+            transforms.RandomApply([
+                transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)  # not strengthened
+            ], p=0.8),
+            transforms.RandomGrayscale(p=0.2),
+            transforms.RandomApply([GaussianBlur([.1, 2.])], p=0.5),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            normalize
+        ]
+
+        train_dataset = datasets.ImageFolder(
+            train_path,
+            TwoCropsTransform(transforms.Compose(augmentation)))
+        train_loader = torch.utils.data.DataLoader(
+            train_dataset, 
+            batch_size=batch_size, 
+            shuffle=(train_sampler is None),
+            num_workers=nDataLoaderThread, 
+            pin_memory=True, 
+            sampler=train_sampler, 
+            drop_last=True)
+        return train_loader
+        
     
     train_dataset = meta_loader(train_path, train_ext, transform)
 

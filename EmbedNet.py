@@ -18,6 +18,7 @@ class EmbedNet(nn.Module):
         EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
         self.__S__ = EmbedNetModel(**kwargs);
 
+        self.trainfunc = trainfunc
         ## __L__ is the classifier plus the loss function
         LossFunction = importlib.import_module('loss.'+trainfunc).__getattribute__('LossFunction')
         self.__L__ = LossFunction(**kwargs);
@@ -35,7 +36,10 @@ class EmbedNet(nn.Module):
 
         else:
             outp    = outp.reshape(self.nPerClass,-1,outp.size()[-1]).transpose(1,0).squeeze(1)
-            nloss = self.__L__.forward(outp,label)
+            if self.trainfunc == "simsiam":
+                nloss = self.__L__.forward()
+            else:
+                nloss = self.__L__.forward(outp,label)
             return nloss
 
 
