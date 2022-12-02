@@ -11,7 +11,7 @@ img_mean = np.array([104., 117., 123.])[:, np.newaxis, np.newaxis].astype('float
 
 class S3FD():
 
-    def __init__(self, device='cuda', PATH_WEIGHT=glob.glob('weights/sfd_face.pth')):
+    def __init__(self, device='cuda', PATH_WEIGHT='./models/s3fd_facedet/s3fd/weights/sfd_face.pth'):
 
         tstamp = time.time()
         self.device = device
