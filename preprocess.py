@@ -52,9 +52,9 @@ def Preprocess(data_dir, orig_path, temp_path):
         image_np  = data[1][0].numpy()
         fname     = data[2][0]
         
-        w, h = image_np.shape[1], image_np.shape[0]
-        if w < 125 or h < 125:
-            continue
+        # w, h = image_np.shape[1], image_np.shape[0]
+        # if w < 125 or h < 125:
+        #     continue
 
         bboxes = DET.detect_faces(image_np, conf_th=0.9, scales=[0.5])
 
