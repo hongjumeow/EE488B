@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 
-class SupConLoss(nn.Module):
+class LossFunction(nn.Module):
     """Supervised Contrastive Learning: https://arxiv.org/pdf/2004.11362.pdf.
     It also supports the unsupervised contrastive loss in SimCLR"""
     def __init__(self, temperature=0.07, contrast_mode='all',
                  base_temperature=0.07):
-        super(SupConLoss, self).__init__()
+        super(LossFunction, self).__init__()
         self.temperature = temperature
         self.contrast_mode = contrast_mode
         self.base_temperature = base_temperature
