@@ -88,12 +88,11 @@ def Preprocess(data_dir, orig_path, temp_path):
     # output_files = glob.glob(temp_path+'/*/*.jpg')
     shutil.make_archive(data_dir+'/vggface', 'zip', root_dir=temp_path)
     
-def __main__():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='data/vggface')
-    parser.add_argument('--orig_path', type=str, default='/train')
-    parser.add_argument('--temp_path', type=str, default='/preprocessed')
-    
-    arg = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument('--data_dir', type=str, default='data/vggface')
+parser.add_argument('--orig_path', type=str, default='/train')
+parser.add_argument('--temp_path', type=str, default='/preprocessed')
 
-    Preprocess(arg.data_dir, arg.orig_path, arg.temp_path)
+arg = parser.parse_args()
+
+Preprocess(arg.data_dir, arg.orig_path, arg.temp_path)
