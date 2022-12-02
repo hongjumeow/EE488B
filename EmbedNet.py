@@ -36,10 +36,7 @@ class EmbedNet(nn.Module):
 
         else:
             outp    = outp.reshape(self.nPerClass,-1,outp.size()[-1]).transpose(1,0).squeeze(1)
-            if self.trainfunc == "simsiam":
-                nloss = self.__L__.forward()
-            else:
-                nloss = self.__L__.forward(outp,label)
+            nloss = self.__L__.forward(outp,label)
             return nloss
 
 
