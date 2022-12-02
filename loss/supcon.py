@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torchvision.transforms as transforms
 
 class LossFunction(nn.Module):
     """Supervised Contrastive Learning: https://arxiv.org/pdf/2004.11362.pdf.
@@ -23,6 +24,9 @@ class LossFunction(nn.Module):
         Returns:
             A loss scalar.
         """
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        features = normalize(features)
+        
         device = (torch.device('cuda')
                   if features.is_cuda
                   else torch.device('cpu'))
