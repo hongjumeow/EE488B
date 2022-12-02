@@ -5,7 +5,7 @@ class LossFunction(nn.Module):
     """
     Build a SimSiam model.
     """
-    def __init__(self, base_encoder, dim=2048, pred_dim=512):
+    def __init__(self, base_encoder, dim=2048, nOut=512, **kwargs):
         """
         dim: feature dimension (default: 2048)
         pred_dim: hidden dimension of the predictor (default: 512)
@@ -29,10 +29,10 @@ class LossFunction(nn.Module):
         self.encoder.fc[6].bias.requires_grad = False # hack: not use bias as it is followed by BN
 
         # build a 2-layer predictor
-        self.predictor = nn.Sequential(nn.Linear(dim, pred_dim, bias=False),
-                                        nn.BatchNorm1d(pred_dim),
+        self.predictor = nn.Sequential(nn.Linear(dim, nOut, bias=False),
+                                        nn.BatchNorm1d(nOut),
                                         nn.ReLU(inplace=True), # hidden layer
-                                        nn.Linear(pred_dim, dim)) # output layer
+                                        nn.Linear(nOut, dim)) # output layer
 
     def forward(self, x1, x2):
         """
