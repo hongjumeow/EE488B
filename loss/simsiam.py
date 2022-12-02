@@ -15,7 +15,7 @@ class LossFunction(nn.Module):
 
         # create the encoder
         # num_classes is the output fc dimension, zero-initialize last BNs
-        self.encoder = torchvision.models.resnet50(num_classes=nOut)
+        self.encoder = torchvision.models.resnet50(num_classes=dim)
 
         # build a 3-layer projector
         prev_dim = self.encoder.fc.weight.shape[1]
