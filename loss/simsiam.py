@@ -15,7 +15,7 @@ class LossFunction(nn.Module):
 
         # create the encoder
         # num_classes is the output fc dimension, zero-initialize last BNs
-        self.encoder = torchvision.models.resnet50(num_classes=dim)
+        self.encoder = torchvision.models.resnet50(num_classes=nOut)
 
         # build a 3-layer projector
         prev_dim = self.encoder.fc.weight.shape[1]
@@ -51,5 +51,7 @@ class LossFunction(nn.Module):
 
         p1 = self.predictor(z1) # NxC
         p2 = self.predictor(z2) # NxC
-
-        return p1, p2, z1.detach(), z2.detach()
+        
+        criterion = nn.CosineSimilarity(dim=1)
+        loss = -(criterion(p1, z2.detach()).mean() + criterion(p2, z1.detach()).mean()) * 0.5
+        return loss
