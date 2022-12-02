@@ -141,7 +141,7 @@ def get_data_loader(batch_size, max_img_per_cls, nDataLoaderThread, nPerClass, t
         drop_last=True,
         transform=transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomRotation([90, 180, 270]),
+            transforms.RandomRotation(15),
         ])
     )
     
