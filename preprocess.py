@@ -1,25 +1,13 @@
 import os, glob, sys, shutil
+import numpy as np
 import argparse
 from tqdm import tqdm
-from PIL import Image
 import torch
-import torchvision.transforms as transforms
-import torchvision.models as models
 from .models.s3fd_facedet import S3FD
 import cv2
-import numpy as np
 
 # Load the face detector (you can ignore this part)
 DET = S3FD(device='cuda')
-
-class FaceRecognition(torch.nn.Module):
-    def __init__(self, nEmbed, nClasses):
-        super(FaceRecognition, self).__init__()
-        self.__S__ 			= models.resnet18(num_classes=nEmbed)
-
-    def forward(self, x, label=None):
-        x 	= self.__S__(x)
-        return x
     
 class your_dataset(torch.utils.data.Dataset):
     def __init__(self, files):
