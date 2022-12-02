@@ -130,7 +130,6 @@ def get_data_loader(batch_size, max_img_per_cls, nDataLoaderThread, nPerClass, t
     train_dataset = meta_loader(train_path, train_ext, transform)
 
     train_sampler = meta_sampler(train_dataset, nPerClass, max_img_per_cls, batch_size)
-
     train_loader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=batch_size,
@@ -139,10 +138,6 @@ def get_data_loader(batch_size, max_img_per_cls, nDataLoaderThread, nPerClass, t
         pin_memory=False,
         worker_init_fn=worker_init_fn,
         drop_last=True,
-        transform=transforms.Compose([
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomRotation(15),
-        ])
     )
     
     return train_loader
