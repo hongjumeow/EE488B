@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 from tqdm import tqdm
 import torch
-from .models.s3fd_facedet import S3FD
+from models.s3fd_facedet import S3FD
 import cv2
 
 # Load the face detector (you can ignore this part)
