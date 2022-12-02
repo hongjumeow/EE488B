@@ -31,7 +31,7 @@ class S3FD():
 
         with torch.no_grad():
             for s in scales:
-                scaled_img = cv2.resize(image, dsize=(0, 0), fx=s, fy=s, interpolation=cv2.INTER_LINEAR)
+                scaled_img = cv2.resize(image, dsize=(224, 224), fx=s, fy=s, interpolation=cv2.INTER_LINEAR)
 
                 scaled_img = np.swapaxes(scaled_img, 1, 2)
                 scaled_img = np.swapaxes(scaled_img, 1, 0)
