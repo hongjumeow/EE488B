@@ -7,7 +7,6 @@ from models.s3fd_facedet import S3FD
 import cv2
 
 # Load the face detector (you can ignore this part)
-DET = S3FD(device='cuda')
     
 class your_dataset(torch.utils.data.Dataset):
     def __init__(self, files):
@@ -36,7 +35,6 @@ def Preprocess(data_dir, orig_path, temp_path):
     files = glob.glob(orig_path+'/*/*.jpg') + glob.glob(orig_path+'/*/*.png')
     print(len(files),'original images found.')
     DET = S3FD(device='cuda')
-    
 
     dataset = your_dataset(files)
     loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False, num_workers=10)
