@@ -87,4 +87,4 @@ class LossFunction(nn.Module):
         loss = - (self.temperature / self.base_temperature) * mean_log_prob_pos
         loss = loss.view(anchor_count, batch_size).mean()
 
-        return 
+        return loss
