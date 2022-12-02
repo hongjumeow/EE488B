@@ -1,18 +1,17 @@
-import time
+import time, glob
 import numpy as np
 import cv2
 import torch
-from torchvision import transforms
 from .nets import S3FDNet
 from .box_utils import nms_
 
-PATH_WEIGHT = '~/EE488B/models/s3fd_facedet/s3fd/weights/sfd_face.pth'
+# PATH_WEIGHT = '~/EE488B/models/s3fd_facedet/s3fd/weights/sfd_face.pth'
 img_mean = np.array([104., 117., 123.])[:, np.newaxis, np.newaxis].astype('float32')
 
 
 class S3FD():
 
-    def __init__(self, device='cuda'):
+    def __init__(self, device='cuda', PATH_WEIGHT=glob.glob('./weights/sfd_face.pth')):
 
         tstamp = time.time()
         self.device = device
