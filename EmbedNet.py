@@ -42,13 +42,19 @@ class EmbedNet(nn.Module):
 
 class ModelTrainer(object):
 
-    def __init__(self, embed_model, optimizer, scheduler, mixedprec, **kwargs):
+    def __init__(self, embed_model, optimizer, scheduler, mixedprec, finetune, **kwargs):
 
         self.__model__  = embed_model
 
         ## Optimizer (e.g. Adam or SGD)
         Optimizer = importlib.import_module('optimizer.'+optimizer).__getattribute__('Optimizer')
-        self.__optimizer__ = Optimizer(self.__model__.parameters(), **kwargs)
+        if finetune:
+            self.__optimizer__ = Optimizer([
+                {'params': self.__model__.conv_layer.parameters(), 'lr': 0.0001},
+                {'params': self.__model__.fc_layer.parameters()}
+            ], **kwargs)
+        else:
+            self.__optimizer__ = Optimizer(self.__model__.parameters(), **kwargs)
 
         ## Learning rate scheduler
         Scheduler = importlib.import_module('scheduler.'+scheduler).__getattribute__('Scheduler')

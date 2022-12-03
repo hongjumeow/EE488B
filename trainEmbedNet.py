@@ -63,6 +63,7 @@ parser.add_argument('--output',         type=str,   default="",     help='Save a
 parser.add_argument('--mixedprec',      dest='mixedprec',   action='store_true', help='Enable mixed precision training');
 parser.add_argument('--gpu',            type=int,   default=9,      help='GPU index');
 parser.add_argument('--input_size', type=int, default=224);
+parser.add_argument('--finetune', dest='finetune', action='store_true');
 
 args = parser.parse_args();
 
