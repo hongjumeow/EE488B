@@ -50,7 +50,8 @@ class ModelTrainer(object):
         Optimizer = importlib.import_module('optimizer.'+optimizer).__getattribute__('Optimizer')
         if finetune:
             self.__optimizer__ = Optimizer([
-                {'params': self.__model__.classifier.parameters(), 'lr': 0.01}
+                {'params': self.__model__.features.parameters(), 'lr': 0.0001},
+                {'params': self.__model__.classifier.parameters()}
             ], **kwargs)
         else:
             self.__optimizer__ = Optimizer(self.__model__.parameters(), **kwargs)
