@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 class EmbedNet(nn.Module):
 
-    def __init__(self, model, optimizer, trainfunc, nPerClass, **kwargs):
+    def __init__(self, model, optimizer, trainfunc, nPerClass, finetune, **kwargs):
         super(EmbedNet, self).__init__();
         ## __S__ is the embedding model
         EmbedNetModel = importlib.import_module('models.'+model).__getattribute__('MainModel')
@@ -25,6 +25,10 @@ class EmbedNet(nn.Module):
 
         ## Number of examples per identity per batch
         self.nPerClass = nPerClass
+        
+        if finetune:
+            self.features = self.__S__.features
+            self.classifier = self.__S__.classifier
 
     def forward(self, data, label=None):
 
