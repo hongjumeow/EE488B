@@ -26,6 +26,8 @@ class EmbedNet(nn.Module):
         ## Number of examples per identity per batch
         self.nPerClass = nPerClass
         
+        # for model that's under finetuning, 
+        # state its different layers for different lr assignment
         if finetune:
             self.features = self.__S__.features
             self.classifier = self.__S__.classifier
@@ -52,6 +54,8 @@ class ModelTrainer(object):
 
         ## Optimizer (e.g. Adam or SGD)
         Optimizer = importlib.import_module('optimizer.'+optimizer).__getattribute__('Optimizer')
+        
+        # under finetuning condition, variation on learning rate
         if finetune:
             self.__optimizer__ = Optimizer([
                 {'params': self.__model__.features.parameters(), 'lr': 0.0001},
