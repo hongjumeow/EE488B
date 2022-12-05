@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
+import torch.nn.functional as F
 
 class LossFunction(nn.Module):
     """Supervised Contrastive Learning: https://arxiv.org/pdf/2004.11362.pdf.
@@ -85,7 +86,7 @@ class LossFunction(nn.Module):
 
         # compute log_prob
         exp_logits = torch.exp(logits) * logits_mask
-        log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True))
+        log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True) + 1e-6)
 
         # compute mean of log-likelihood over positive
         mean_log_prob_pos = (mask * log_prob).sum(1) / mask.sum(1)
