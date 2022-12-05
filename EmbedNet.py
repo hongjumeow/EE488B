@@ -41,8 +41,8 @@ class EmbedNet(nn.Module):
             return outp
 
         else:
-            if self.trainfunc != "supcon":
-                outp    = outp.reshape(self.nPerClass,-1,outp.size()[-1]).transpose(1,0).squeeze(1)
+            # if self.trainfunc != "supcon":
+            outp    = outp.reshape(self.nPerClass,-1,outp.size()[-1]).transpose(1,0).squeeze(1)
             nloss = self.__L__.forward(outp,label)
             return nloss
 
