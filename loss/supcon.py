@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torchvision.transforms as transforms
 import torch.nn.functional as F
 
 class LossFunction(nn.Module):
@@ -25,11 +24,6 @@ class LossFunction(nn.Module):
         Returns:
             A loss scalar.
         """
-        # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        # features = normalize(features) 
-        # bsz = labels.shape[0]
-        # f1, f2 = torch.split(features, [bsz, bsz], dim=0)
-        # features = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
         
         features = F.normalize(features, dim=2)
 
