@@ -31,7 +31,7 @@ class LossFunction(nn.Module):
         # f1, f2 = torch.split(features, [bsz, bsz], dim=0)
         # features = torch.cat([f1.unsqueeze(1), f2.unsqueeze(1)], dim=1)
         
-        # features = F.normalize(features, dim=2)
+        features = F.normalize(features, dim=2)
 
         device = (torch.device('cuda')
                   if features.is_cuda
